@@ -1,0 +1,93 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<html>
+<head>
+    <title>Hello AJAX</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.hello').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("HelloAjax", "Home")',
+                    success: function (result) {
+                        $('#result1').html(result);
+                    }
+                });
+            });
+
+            //Using parameters
+            $('.sum').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    data: { a: 1, b: 2 },
+                    url: '@Url.Action("Sum", "Home")',
+                    success: function (result) {
+                        $('#result2').html(result);
+                    }
+                });
+            });
+
+            //Display an object with JSON
+            $('.displayobject').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '@Url.Action("DisplayObject", "Home")',
+                    success: function (result) {
+                        var s = 'Id: ' + result.Id + '<br>Name: ' + result.Name + '<br>Price: ' + result.Price;
+                        $('#result3').html(s);
+                    }
+                });
+            });
+
+            //Display a list object with JSON
+            $('.displaylistobject').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '@Url.Action("DisplayListObject", "Home")',
+                    success: function (result) {
+                        var s = '';
+                        for (var i = 0; i < result.length; i++)
+                            s += '<br>Id: ' + result[i].Id + '<br>Name: ' + result[i].Name + '<br>Price: ' + result[i].Price + '<br>===';
+                        $('#result4').html(s);
+                    }
+                });
+            });
+
+        });
+    </script>
+
+</head>
+<body>
+    <h2>Welcome to the AJAX Testing Arena!</h2>
+    
+    <h3>Basic AJAX</h3>
+    <a href="#" class="hello">Hello</a>
+    <br />
+    <div id="result1"></div>
+
+    <h3>Using Parameters</h3>
+    <a href="#" class="sum">Sum</a>
+    <br />
+    <div id="result2"></div>
+
+    <h3>Using JSON to display an object</h3>
+    <a href="#" class="displayobject">Display Object</a>
+    <br />
+    <div id="result3"></div>
+
+    <h3>Using JSON to display a list object</h3>
+    <a href="#" class="displaylistobject">Display List Object</a>
+    <br />
+    <div id="result4"></div>
+</body>
+</html>
